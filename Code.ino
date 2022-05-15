@@ -3,7 +3,8 @@
 
 #define DHT_TYPE DHT11
 #define DHT_Pin 12
-#define MQ5_Pin 14 
+#define MQ5_Pin 14
+#define LDR_Pin 27 
 
 const char* ssid = "your ssid";
 const char* password = "your password";
@@ -13,6 +14,7 @@ DHT dht(DHT_Pin, DHT_TYPE)
 float temperature;
 float humidity;
 float gas_concentration;
+float light_intensity;
 
 void setup() {
   // put your setup code here, to run once:
@@ -34,6 +36,8 @@ void setup() {
 
   pinMode(MQ5_Pin, INPUT);
 
+  pinMode(LDR_Pin, INPUT);
+
 }
 
 void loop() {
@@ -42,8 +46,9 @@ void loop() {
     Serial.println("Connected");
     Serial.print("IP Address: ");
     Serial.println(WiFi.localIP());
-    get_DHT_readngs();
-    get_MQ5_concentration();
+    get_DHT_readings();
+    get_MQ5_readings();
+    get_LDR_readings();
     delay(5000);
   }
   else {
@@ -58,4 +63,8 @@ void get_DHT_readings() {
 
 void get_MQ5_readings() {
   gas_concentration = analogRead(MQ5_Pin);
+}
+
+void get_LDR_readings() {
+  light_intensity = analogRead(LDR_Pin);
 }
