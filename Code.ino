@@ -1,7 +1,7 @@
 #include <WiFi.h>;
 
-const char* ssid = "Redmi 9C";
-const char* password = "a629fg65";
+const char* ssid = "your ssid";
+const char* password = "your password";
 
 void setup() {
   // put your setup code here, to run once:
