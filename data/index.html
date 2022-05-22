@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Food Quality Monitoring</title>
+        <link href="styles.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="page-container">
+            <div class="page-header">Food Quality Monitoring System</div>
+            <div class="page-content">
+                <div class="page-data">
+                    <div class="sensor-values">
+                        <div class="sensor">
+                            <div class="sensor-name">Light Intensity (Lux)</div>
+                            <div class="sensor-value">100</div>
+                        </div>
+                        <div class="sensor">
+                            <div class="sensor-name">Temperature (&#176; C)</div>
+                            <div class="sensor-value">32</div>
+                        </div>
+                        <div class="sensor">
+                            <div class="sensor-name">Humidity (%)</div>
+                            <div class="sensor-value">60</div>
+                        </div>
+                        <div class="sensor" style="border-right: none">
+                            <div class="sensor-name">Gas Concentration (ppm)</div>
+                            <div class="sensor-value">50</div>
+                        </div>
+                    </div>
+                    <div class="sensor-graphs">
+
+                        <div class="graph-pane">
+                            <div class="graph-item">
+                                <div class="graph-heading">Light Intensity (lux)</div>
+                                <div class="graph">
+                                    
+                                </div>
+                            </div>
+                            <div class="graph-item" style="border-right: none">
+                                <div class="graph-heading">Temperature (&#176; C)</div>
+                                <div class="graph">
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="graph-pane">
+                            <div class="graph-item">
+                                <div class="graph-heading">Humidity (%)</div>
+                                <div class="graph">
+                                    
+                                </div>
+                            </div>
+                            <div class="graph-item" style="border-right: none">
+                                <div class="graph-heading">Gas Concentration (ppm)</div>
+                                <div class="graph">
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="page-input">
+                    <div class="config-container">
+                        <div class="config-heading">System Configuration</div>
+                        <div class="value-label" id="selected-food-type"><b>Type of Food:</b></div>
+                        <div class="value-label" id="light-range"><b>Light Intensity Range (lux):</b></div>
+                        <div class="value-label" id="temp-range"><b>Temperature Range (&#176; C):</b></div>
+                        <div class="value-label" id="humidity-range"><b>Humidity Range (%):</b></div>
+                        <div class="value-label" id="gas-range"><b>Gas Concentration (ppm):</b></div>
+                    </div>
+                    <div class="input-form-container">
+                        <form class="input-form">
+                            <div class="form-heading">Set Configuration</div>
+                            <div class="form-item">
+                                <label class="form-label">Type of Food:</label>
+                                <select class="form-dropdown" id="food-type">
+                                    <option value="Meat" class="dropdown-item">Meat</option>
+                                    <option value="Chicken" class="dropdown-item">Chicken</option>
+                                    <option value="Fruits/Vegetables" class="dropdown-item">Fruits/Vegetables</option>
+                                    <option value="Dairy" class="dropdown-item">Dairy</option>
+                                    <option value="Custom" class="dropdown-item">Custom</option>
+                                </select>
+                            </div>
+
+                            <label class="form-label">Light Intensity: </label>
+                            <div class="form-item">
+                                <input class="form-input" placeholder="Minimum Value" type="number" id="light-min">
+                                <label class="form-label" style="width: 10%; text-align: center; margin-right: 10px">to</label>
+                                <input class="form-input" placeholder="Maximum Value" type="number" id="light-max" style="margin-right: 0px">
+                            </div>
+
+                            <label class="form-label">Temperature: </label>
+                            <div class="form-item">
+                                <input class="form-input" placeholder="Minimum Value" type="number" id="temp-min">
+                                <label class="form-label" style="width: 10%; text-align: center; margin-right: 10px">to</label>
+                                <input class="form-input" placeholder="Maximum Value" type="number" id="temp-max" style="margin-right: 0px">
+                            </div>
+
+                            <label class="form-label">Humidity: </label>
+                            <div class="form-item">
+                                <input class="form-input" placeholder="Minimum Value" type="number" id="humidity-min">
+                                <label class="form-label" style="width: 10%; text-align: center; margin-right: 10px">to</label>
+                                <input class="form-input" placeholder="Maximum Value" type="number" id="humidity-max" style="margin-right: 0px">
+                            </div>
+
+                            <label class="form-label">Gas Concentration: </label>
+                            <div class="form-item">
+                                <input class="form-input" placeholder="Minimum Value" type="number" id="gas-min">
+                                <label class="form-label" style="width: 10%; text-align: center; margin-right: 10px">to</label>
+                                <input class="form-input" placeholder="Maximum Value" type="number" id="gas-max" style="margin-right: 0px">
+                            </div>
+                            <div class="form-submit">
+                                <button type="submit" id="submit" class="submit-button">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var submit = document.getElementById("submit");
+            let lightMax, lightMin, tempMin, tempMax, humidityMin, humidityMax, gasMax, gasMin;
+            let lightMaxTag = document.getElementById("light-max");
+            let lightMinTag = document.getElementById("light-min");
+            let tempMaxTag = document.getElementById("temp-max");
+            let tempMinTag = document.getElementById("temp-min");
+            let humidityMinTag = document.getElementById("humidity-min"); 
+            let humidityMaxTag = document.getElementById("humidity-max");
+            let gasMaxTag = document.getElementById("gas-max");
+            let gasMinTag = document.getElementById("gas-min");
+
+            submit.addEventListener("click", (e) => {
+                e.preventDefault();
+                var foodTypeSelect = document.getElementById("food-type");
+                var foodType = foodTypeSelect.options[foodTypeSelect.selectedIndex].value;
+                lightMin = lightMinTag.value;
+                lightMax = lightMaxTag.value;
+                tempMin = tempMinTag.value;
+                tempMax = tempMaxTag.value;
+                humidityMin = humidityMinTag.value;
+                humidityMax = humidityMaxTag.value;
+                gasMin = gasMinTag.value;
+                gasMax = gasMaxTag.value;
+                var lightRange = " " + lightMin + " - " + lightMax;
+                var tempRange = " " + tempMin + " - " + tempMax;
+                var humidityRange = " " + humidityMin + " - " + humidityMax;
+                var gasRange = " " + gasMin + " - " + gasMax;
+                document.getElementById("selected-food-type").innerHTML += " " + foodType;
+                document.getElementById("light-range").innerHTML += lightRange;
+                document.getElementById("temp-range").innerHTML+= tempRange;
+                document.getElementById("humidity-range").innerHTML += humidityRange;
+                document.getElementById("gas-range").innerHTML += gasRange;
+                lightMinTag.value = "";
+                lightMaxTag.value = "";
+                gasMinTag.value = "";
+                gasMaxTag.value = "";
+                tempMaxTag.value = "";
+                tempMinTag.value = "";
+                humidityMaxTag.value = "";
+                humidityMinTag.value = "";
+            })
+        </script>
+    </body>
+</html>

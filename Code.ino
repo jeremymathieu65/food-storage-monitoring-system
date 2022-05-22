@@ -2,14 +2,14 @@
 #include <DHT.h>
 
 #define DHT_TYPE DHT11
-#define DHT_Pin 12
+#define DHT_Pin 4
 #define MQ5_Pin 14
-#define LDR_Pin 27 
+#define LDR_Pin A0 
 
-const char* ssid = "your ssid";
-const char* password = "your password";
+const char* ssid = "Redmi 9C";
+const char* password = "a629fg65";
 
-DHT dht(DHT_Pin, DHT_TYPE)
+DHT dht(DHT_Pin, DHT_TYPE);
 
 float temperature;
 float humidity;
@@ -58,13 +58,22 @@ void loop() {
 
 void get_DHT_readings() {
   temperature = dht.readTemperature();
+  
   humidity = dht.readHumidity();
+  Serial.print("Temperature: ");
+  Serial.println(temperature);
+  Serial.print("Humidity: ");
+  Serial.println(humidity);
 }
 
 void get_MQ5_readings() {
   gas_concentration = analogRead(MQ5_Pin);
+  Serial.print("Gas Level: ");
+  Serial.println(gas_concentration);
 }
 
 void get_LDR_readings() {
   light_intensity = analogRead(LDR_Pin);
+  Serial.print("Light Intensity: ");
+  Serial.println(light_intensity);
 }
