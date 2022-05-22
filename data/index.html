@@ -3,6 +3,261 @@
     <head>
         <title>Food Quality Monitoring</title>
         <link href="styles.css" rel="stylesheet">
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                background-color: whitesmoke;
+            }
+
+            .page-container {
+                width: 100%;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .page-header {
+                font-family: 'Poppins';
+                font-size: 45px;
+                font-weight: bold;
+                color: black;  
+                width: 90%;
+                text-align: center;
+                padding: 10px;
+                border-bottom: 5px solid grey;
+            }
+
+            .page-content {
+                display: flex;
+                flex-direction: row;
+                width: 90%;
+                margin-top: 10px;
+                padding: 10px;
+            }
+
+            .page-data {
+                width: 80%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+                border-right: 5px solid grey;
+            }
+
+            .sensor-values {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                width: 90%;
+                padding: 20px;
+                background-color: white;
+                border-radius: 10px;
+                margin-bottom: 20px;
+            }
+
+            .sensor {
+                display: flex;
+                flex-direction: column;
+                width: 25%;
+                padding: 10px;
+                border-right: 3px solid grey;
+            }
+
+            .sensor-name, .sensor-value {
+                font-family: 'Poppins';
+                font-size: 20px;
+                font-weight: bold;
+                text-align: center;
+                width: 100%;
+                margin: 5px;
+            }
+
+            .sensor-value {
+                font-weight: normal;
+            }
+
+            .sensor-graphs {
+                width: 90%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                border-radius: 10px;
+                background-color: white;
+            }
+
+            .graph-pane {
+                display: flex;
+                flex-direction: row;
+                width: 90%;
+                margin-bottom: 20px;
+                padding: 20px;
+            }
+
+            .graph-item {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+                width: 50%;
+            }
+
+            .graph-heading {
+                font-family: 'Poppins';
+                font-size: 15px;
+                font-weight: bold;
+                text-align: center;
+                width: 100%;
+            }
+
+            .graph {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .page-input {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                width: 20%;
+                margin-left: 20px;
+                background-color: white;
+                border-radius: 10px;
+                padding: 20px;
+            }
+
+            .config-container {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+                border-bottom: 3px solid grey;
+                margin-bottom: 10px;
+            }
+
+            .config-heading, .form-heading {
+                font-family: 'Poppins';
+                font-size: 20px;
+                text-align: left;
+                font-weight: bold;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .value-label { 
+                width: 100%;
+                font-family: 'Poppins';
+                font-size: 15px;
+                margin-bottom: 10px;
+                text-align: left;
+            }
+
+            .input-form-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                padding: 10px;
+            }
+
+            .input-form {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+            }
+
+            .form-item {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: center;
+                width: 100%;
+                padding: 5px;
+                margin-bottom: 10px;
+            }
+
+            .form-label {
+                font-family: 'Poppins';
+                font-size: 15px;
+                font-weight: bold;
+                width: 100%;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+
+            .form-dropdown {
+                width: 75%;
+                background-color: whitesmoke;
+                border: none;
+                border-radius: 10px;
+                height: 80%;
+            }
+
+            .dropdown-item, .form-dropdown {
+                font-family: 'Poppins';
+                font-size: 13px;
+                text-align: center;
+            }
+
+            .form-input {
+                width: 45%;
+                font-family: 'Poppins';
+                font-size: 13px;
+                padding: 5px;
+                padding-left: 10px;
+                margin-right: 10px;
+                border: none;
+                border-radius: 5px;
+                background-color: whitesmoke;
+            }
+
+            .form-submit {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+            }
+
+            .submit-button {
+                border: none;
+                display: flex; 
+                justify-content: center;
+                align-items: center;
+                font-family: 'Poppins';
+                font-size: 15px;
+                font-weight: bold;
+                background-color: lightseagreen;
+                color: whitesmoke;
+                padding: 10px;
+                border-radius: 10px;
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+        </style>
     </head>
     <body>
         <div class="page-container">
@@ -12,19 +267,19 @@
                     <div class="sensor-values">
                         <div class="sensor">
                             <div class="sensor-name">Light Intensity (Lux)</div>
-                            <div class="sensor-value">100</div>
+                            <div class="sensor-value" id="light-intensity">100</div>
                         </div>
                         <div class="sensor">
                             <div class="sensor-name">Temperature (&#176; C)</div>
-                            <div class="sensor-value">32</div>
+                            <div class="sensor-value" id="temperature">32</div>
                         </div>
                         <div class="sensor">
                             <div class="sensor-name">Humidity (%)</div>
-                            <div class="sensor-value">60</div>
+                            <div class="sensor-value" id="humidity">60</div>
                         </div>
                         <div class="sensor" style="border-right: none">
                             <div class="sensor-name">Gas Concentration (ppm)</div>
-                            <div class="sensor-value">50</div>
+                            <div class="sensor-value" id="gas-concentration">50</div>
                         </div>
                     </div>
                     <div class="sensor-graphs">
@@ -32,30 +287,22 @@
                         <div class="graph-pane">
                             <div class="graph-item">
                                 <div class="graph-heading">Light Intensity (lux)</div>
-                                <div class="graph">
-                                    
-                                </div>
+                                <div class="graph" id="light-chart"></div>
                             </div>
                             <div class="graph-item" style="border-right: none">
                                 <div class="graph-heading">Temperature (&#176; C)</div>
-                                <div class="graph">
-                                    
-                                </div>
+                                <div class="graph" id="temp-chart"></div>
                             </div>
                         </div>
 
                         <div class="graph-pane">
                             <div class="graph-item">
                                 <div class="graph-heading">Humidity (%)</div>
-                                <div class="graph">
-                                    
-                                </div>
+                                <div class="graph" id="humidity-chart"></div>
                             </div>
                             <div class="graph-item" style="border-right: none">
                                 <div class="graph-heading">Gas Concentration (ppm)</div>
-                                <div class="graph">
-                                    
-                                </div>
+                                <div class="graph" id="gas-chart"></div>
                             </div>
                         </div>
 
@@ -161,6 +408,175 @@
                 humidityMaxTag.value = "";
                 humidityMinTag.value = "";
             })
+
+            var chartT = new Highcharts.Chart({
+                chart:{ renderTo : 'temp-chart'},
+                title: {text: null},
+                series: [{
+                    showInLegend: false,
+                    data: []
+                }],
+                plotOptions: {
+                    line: { animation: false,
+                    dataLabels: { enabled: true }
+                    },
+                    series: { color: '#059e8a', name: "Temperature (\u00B0 C)" }
+                },
+                xAxis: { type: 'datetime',
+                    dateTimeLabelFormats: { second: '%H:%M:%S' },
+                    title: {text: "Date/Time", style: "font-family: 'Poppins', font-size: 10px"}
+                },
+                yAxis: {
+                    title: { text: 'Temperature (\u00B0 C)', style: "font-family: 'Poppins', font-size: 10px" }
+                },
+                credits: { enabled: false }
+            });
+
+            var chartG = new Highcharts.Chart({
+                chart:{ renderTo : 'gas-chart' },
+                title: {text: null},
+                series: [{
+                    showInLegend: false,
+                    data: []
+                }],
+                plotOptions: {
+                    line: { animation: false,
+                    dataLabels: { enabled: true }
+                    },
+                    series: { color: '#059e8a', name: "Gas Concentration (ppm)" }
+                },
+                xAxis: { type: 'datetime',
+                    dateTimeLabelFormats: { second: '%H:%M:%S' },
+                    title: {text: "Date/Time", style: "font-family: 'Poppins', font-size: 10px"}
+                },
+                yAxis: {
+                    title: { text: 'Gas Concentration (ppm)', style: "font-family: 'Poppins', font-size: 10px" }
+                },
+                credits: { enabled: false }
+            });
+
+            var chartH = new Highcharts.Chart({
+                chart:{ renderTo : 'humidity-chart' },
+                title: {text: null},
+                series: [{
+                    showInLegend: false,
+                    data: []
+                }],
+                plotOptions: {
+                    line: { animation: false,
+                    dataLabels: { enabled: true }
+                    },
+                    series: { color: '#059e8a', name: "Humidity (%)" }
+                },
+                xAxis: { type: 'datetime',
+                    dateTimeLabelFormats: { second: '%H:%M:%S' },
+                    title: {text: "Date/Time", style: "font-family: 'Poppins', font-size: 10px"}
+                },
+                yAxis: {
+                    title: { text: 'Humidity (%)', style: "font-family: 'Poppins', font-size: 10px" }
+                },
+                credits: { enabled: false }
+            });
+
+            var chartL = new Highcharts.Chart({
+                chart:{ renderTo : 'light-chart' },
+                title: {text: null},
+                series: [{
+                    showInLegend: false,
+                    data: []
+                }],
+                plotOptions: {
+                    line: { animation: false,
+                    dataLabels: { enabled: true }
+                    },
+                    series: { color: '#059e8a', name: "Light Intensity (lux)" }
+                },
+                xAxis: { type: 'datetime',
+                    dateTimeLabelFormats: { second: '%H:%M:%S' },
+                    title: {text: "Date/Time", style: "font-family: 'Poppins', font-size: 10px"}
+                },
+                yAxis: {
+                    title: { text: 'Light Intensity (lux)', style: "font-family: 'Poppins', font-size: 10px" }
+                },
+                credits: { enabled: false }
+            });
+
+            setInterval(function ( ) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var x = (new Date()).getTime(),
+                            y = parseFloat(this.responseText);
+
+                        document.getElementById("temperature").innerHTML = y;
+                        //console.log(this.responseText);
+                        if(chartT.series[0].data.length > 40) {
+                            chartT.series[0].addPoint([x, y], true, true, true);
+                        } else {
+                            chartT.series[0].addPoint([x, y], true, false, true);
+                        }
+                    }
+                };
+                xhttp.open("GET", "/temperature", true);
+                xhttp.send();
+            }, 3000 ) ;
+
+            setInterval(function ( ) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var x = (new Date()).getTime(),
+                            y = parseFloat(this.responseText);
+                        document.getElementById("humidity").innerHTML = y;
+                        //console.log(this.responseText);
+                        if(chartH.series[0].data.length > 40) {
+                            chartH.series[0].addPoint([x, y], true, true, true);
+                        } else {
+                            chartH.series[0].addPoint([x, y], true, false, true);
+                        }
+                    }
+                };
+                xhttp.open("GET", "/humidity", true);
+                xhttp.send();
+            }, 3000 ) ;
+
+            setInterval(function ( ) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var x = (new Date()).getTime(),
+                            y = parseFloat(this.responseText);
+                        document.getElementById("light-intensity").innerHTML = y;
+                        //console.log(this.responseText);
+                        if(chartL.series[0].data.length > 40) {
+                            chartL.series[0].addPoint([x, y], true, true, true);
+                        } else {
+                            chartL.series[0].addPoint([x, y], true, false, true);
+                        }
+                    }
+                };
+                xhttp.open("GET", "/light-intensity", true);
+                xhttp.send();
+            }, 3000 ) ;
+
+            setInterval(function ( ) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var x = (new Date()).getTime(),
+                            y = parseFloat(this.responseText);
+                        document.getElementById("gas-concentration").innerHTML = y;
+                        //console.log(this.responseText);
+                        if(chartG.series[0].data.length > 40) {
+                            chartG.series[0].addPoint([x, y], true, true, true);
+                        } else {
+                            chartG.series[0].addPoint([x, y], true, false, true);
+                        }
+                    }
+                };
+                xhttp.open("GET", "/gas-concentration", true);
+                xhttp.send();
+            }, 3000 ) ;
         </script>
     </body>
 </html>
