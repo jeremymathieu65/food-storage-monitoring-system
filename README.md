@@ -1,0 +1,1 @@
+This repository contains all the code for a personal project - a monitoring system for a food storage facility. The project is to be installed onto an ESP32 module connected to the appropriate sensors in order to work properly.
